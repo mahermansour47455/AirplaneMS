@@ -11,6 +11,8 @@ public class escale {
     private SimpleStringProperty heureDepart;
     private SimpleStringProperty heurArriver;
 
+    private Vol vol;
+
 
 
 
@@ -28,10 +30,11 @@ public class escale {
 
 
 
-    public escale(String nomAeroport, String heureDepart, String heurArriver) {
+    public escale(String nomAeroport, String heureDepart, String heurArriver, Vol vol) {
         this.nomAeroport = new SimpleStringProperty(nomAeroport);
         this.heureDepart = new SimpleStringProperty(heureDepart);
         this.heurArriver = new SimpleStringProperty(heurArriver);
+        this.vol = vol;
     }
 
     public String getNomAeroport() {
@@ -68,5 +71,13 @@ public class escale {
 
     public void setHeurArriver(String heurArriver) {
         this.heurArriver.set(heurArriver);
+    }
+
+    public Vol getVol() {
+        return vol;
+    }
+
+    public void setVol(Vol vol) {
+        this.vol = vol;
     }
 }

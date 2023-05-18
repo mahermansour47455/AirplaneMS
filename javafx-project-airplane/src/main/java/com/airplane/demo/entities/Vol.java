@@ -2,10 +2,12 @@ package com.airplane.demo.entities;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 public class Vol {
     private SimpleIntegerProperty idVol;
@@ -13,8 +15,8 @@ public class Vol {
     private SimpleStringProperty aeroportArrivee;
     private SimpleStringProperty heureDepart;
     private SimpleStringProperty heureArrivee;
-    private SimpleDateFormat dateDepart;
-    private SimpleDateFormat dateArrivee;
+    private SimpleStringProperty dateDepart;
+    private SimpleStringProperty dateArrivee;
 
 
     private ArrayList<escale> escales;
@@ -25,9 +27,10 @@ public class Vol {
         this.aeroportArrivee = new SimpleStringProperty(aeroportArrivee);
         this.heureDepart = new SimpleStringProperty(heureDepart);
         this.heureArrivee = new SimpleStringProperty(heureArrivee);
-        this.dateDepart = new SimpleDateFormat(dateDepart);
-        this.dateArrivee = new SimpleDateFormat(dateArrivee);
+        this.dateDepart = new SimpleStringProperty(dateDepart);
+        this.dateArrivee = new SimpleStringProperty(dateArrivee);
     }
+
 
 
     public int getIdVol() {
@@ -48,6 +51,14 @@ public class Vol {
 
     public SimpleStringProperty aerropDepartProperty() {
         return aerropDepart;
+    }
+
+    public SimpleStringProperty dateDepartProperty() {
+        return dateDepart;
+    }
+
+    public SimpleStringProperty dateArriveeProperty() {
+        return dateArrivee;
     }
 
     public void setAerropDepart(String aerropDepart) {
@@ -90,19 +101,19 @@ public class Vol {
         this.heureArrivee.set(heureArrivee);
     }
 
-    public SimpleDateFormat getDateDepart() {
+    public SimpleStringProperty getDateDepartProperty() {
         return dateDepart;
     }
 
-    public void setDateDepart(SimpleDateFormat dateDepart) {
+    public void setDateDepart(SimpleStringProperty dateDepart) {
         this.dateDepart = dateDepart;
     }
 
-    public SimpleDateFormat getDateArrivee() {
+    public SimpleStringProperty getDateArriveeProperty() {
         return dateArrivee;
     }
 
-    public void setDateArrivee(SimpleDateFormat dateArrivee) {
+    public void setDateArrivee(SimpleStringProperty dateArrivee) {
         this.dateArrivee = dateArrivee;
     }
 
@@ -113,4 +124,6 @@ public class Vol {
     public void setEscales(ArrayList<escale> escales) {
         this.escales = escales;
     }
+
+
 }

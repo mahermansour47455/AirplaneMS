@@ -13,12 +13,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="693.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.airplane.demo.Compagnie">
+<AnchorPane prefHeight="400.0" prefWidth="693.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.airplane.demo.EscaleController">
     <children>
         <Pane prefHeight="408.0" prefWidth="109.0" style="-fx-background-color: #0394fc;">
             <children>
                 <VBox layoutX="33.0" layoutY="170.0" prefHeight="60.0" prefWidth="108.0" />
-                  <Button layoutX="6.0" layoutY="212.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="97.0" text="Ajouter vol" />
+                  <Button fx:id="RetournerAuVol" layoutX="6.0" layoutY="212.0" mnemonicParsing="false" onAction="#RetournerAuVol" prefHeight="36.0" prefWidth="97.0" text="Ajouter vol" />
             </children>
         </Pane>
         <GridPane layoutX="209.0" layoutY="252.0" prefHeight="105.0" prefWidth="359.0">
@@ -33,11 +33,11 @@
             </rowConstraints>
             <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Areport" />
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date depart" GridPane.rowIndex="2" />
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date arrivee" GridPane.rowIndex="1" />
-                <TextField GridPane.columnIndex="1" />
-                <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="heure depart" GridPane.rowIndex="2" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="heure arrivee" GridPane.rowIndex="1" />
+                <TextField fx:id="Aeroport" GridPane.columnIndex="1" />
+            <TextField fx:id="heureArriver" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="heureDepart" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             </children>
         </GridPane>
         <Pane layoutX="106.0" layoutY="-5.0" prefHeight="38.0" prefWidth="590.0" style="-fx-background-color: #0394fc;">
@@ -51,20 +51,21 @@
         </Pane>
         <Pane layoutX="374.0" layoutY="372.0" prefHeight="36.0" prefWidth="217.0" style="-fx-background-color: #0394fc;">
             <children>
-                <Button layoutX="81.0" layoutY="6.0" mnemonicParsing="false" text="Ajouter" />
+                <Button fx:id="AddEscale" layoutX="24.0" layoutY="6.0" mnemonicParsing="false" onAction="#AffecterEscaleAuVol" text="Ajouter" />
+            <Button fx:id="SelectBtn" layoutX="147.0" layoutY="6.0" mnemonicParsing="false" text="selecter" />
             </children>
         </Pane>
       <Pane layoutX="188.0" layoutY="40.0" prefHeight="186.0" prefWidth="436.0">
          <children>
-            <TableView layoutX="-80.0" layoutY="-7.0" prefHeight="200.0" prefWidth="583.0">
+            <TableView fx:id="TablVol" layoutX="-80.0" layoutY="-7.0" prefHeight="200.0" prefWidth="583.0">
               <columns>
-                <TableColumn prefWidth="39.0" text="ID" />
-                <TableColumn prefWidth="98.0" text="Areport depart" />
-                  <TableColumn prefWidth="91.0" text="Areport arrivee" />
-                  <TableColumn prefWidth="91.0" text="Heure depart" />
-                  <TableColumn prefWidth="91.0" text="Heure arrivee" />
-                  <TableColumn prefWidth="77.0" text="Date depart" />
-                  <TableColumn prefWidth="105.0" text="Date arrivee" />
+                <TableColumn fx:id="colId" prefWidth="39.0" text="ID" />
+                <TableColumn fx:id="ColAd" prefWidth="98.0" text="Areport depart" />
+                  <TableColumn fx:id="ColAA" prefWidth="91.0" text="Areport arrivee" />
+                  <TableColumn fx:id="ColHD" prefWidth="91.0" text="Heure depart" />
+                  <TableColumn fx:id="ColHA" prefWidth="91.0" text="Heure arrivee" />
+                  <TableColumn fx:id="ColDD" prefWidth="77.0" text="Date depart" />
+                  <TableColumn fx:id="ColDA" prefWidth="105.0" text="Date arrivee" />
               </columns>
             </TableView>
          </children>

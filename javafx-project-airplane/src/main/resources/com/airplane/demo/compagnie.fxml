@@ -18,7 +18,7 @@
          <children>
             <VBox layoutX="33.0" layoutY="170.0" prefHeight="60.0" prefWidth="108.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#addescale" prefHeight="56.0" prefWidth="114.0" text="Ajouter escale" />
+                  <Button fx:id="AddEscales" mnemonicParsing="false" onAction="#addescale" prefHeight="56.0" prefWidth="114.0" text="Ajouter escale" />
                </children>
             </VBox>
          </children>
@@ -43,7 +43,7 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Heure arrivee" GridPane.rowIndex="3" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date depart" GridPane.rowIndex="4" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date arrivee" GridPane.rowIndex="5" />
-            <TextField fx:id="aeroportDepart" GridPane.columnIndex="1" />
+            <TextField fx:id="aeroportDepart" onAction="#addescale" GridPane.columnIndex="1" />
             <TextField fx:id="aeroportArriver" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="vhdepart" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="vharriver" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -62,7 +62,7 @@
       </Pane>
       <Pane layoutX="374.0" layoutY="372.0" prefHeight="36.0" prefWidth="217.0" style="-fx-background-color: #0394fc;">
          <children>
-            <Button layoutX="81.0" layoutY="6.0" mnemonicParsing="false" onAction="#addVol" text="Ajouter" />
+            <Button fx:id="btnaddvol" layoutX="81.0" layoutY="6.0" mnemonicParsing="false" onAction="#addVol" text="Ajouter" />
          </children>
       </Pane>
    </children>

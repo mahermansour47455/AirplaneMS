@@ -1,12 +1,24 @@
 package com.airplane.demo;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,6 +45,11 @@ public class VolController implements Initializable {
 
     @FXML
     private TextField vhdepart;
+
+    @FXML
+    private Button btnaddvol;
+    @FXML
+    private Button AddEscales;
     @FXML
     void addVol(ActionEvent event) {
         PreparedStatement st=null;
@@ -74,12 +91,20 @@ public class VolController implements Initializable {
     }
 
     @FXML
-    void addescale(ActionEvent event) {
+    void addescale(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
         alert.setHeaderText(null);
-        alert.setContentText("Escale added successfully");
+        alert.setContentText("vous Avez Etre rediriger vers la page d'ajout d'escale");
         alert.showAndWait();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("escale.fxml"));
+        Parent home = fxmlLoader.load();
+        Scene homeScene = new Scene(home, 680, 410);
+
+        Stage currentStage = (Stage) AddEscales.getScene().getWindow();
+        currentStage.setTitle("Home");
+        currentStage.setScene(homeScene);
+        currentStage.show();
 
 
 
