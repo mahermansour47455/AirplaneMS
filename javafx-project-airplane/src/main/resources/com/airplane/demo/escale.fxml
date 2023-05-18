@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="693.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.airplane.demo.EscaleController">
+<AnchorPane prefHeight="408.0" prefWidth="801.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.airplane.demo.EscaleController">
     <children>
         <Pane prefHeight="408.0" prefWidth="109.0" style="-fx-background-color: #0394fc;">
             <children>
@@ -52,12 +52,12 @@
         <Pane layoutX="374.0" layoutY="372.0" prefHeight="36.0" prefWidth="217.0" style="-fx-background-color: #0394fc;">
             <children>
                 <Button fx:id="AddEscale" layoutX="24.0" layoutY="6.0" mnemonicParsing="false" onAction="#AffecterEscaleAuVol" text="Ajouter" />
-            <Button fx:id="SelectBtn" layoutX="147.0" layoutY="6.0" mnemonicParsing="false" text="selecter" />
+            <Button fx:id="FermerBtn" layoutX="147.0" layoutY="6.0" mnemonicParsing="false" onAction="#FermerVol" text="Fermer" />
             </children>
         </Pane>
       <Pane layoutX="188.0" layoutY="40.0" prefHeight="186.0" prefWidth="436.0">
          <children>
-            <TableView fx:id="TablVol" layoutX="-80.0" layoutY="-7.0" prefHeight="200.0" prefWidth="583.0">
+            <TableView fx:id="TablVol" layoutX="-80.0" layoutY="-7.0" prefHeight="200.0" prefWidth="694.0">
               <columns>
                 <TableColumn fx:id="colId" prefWidth="39.0" text="ID" />
                 <TableColumn fx:id="ColAd" prefWidth="98.0" text="Areport depart" />
@@ -66,6 +66,7 @@
                   <TableColumn fx:id="ColHA" prefWidth="91.0" text="Heure arrivee" />
                   <TableColumn fx:id="ColDD" prefWidth="77.0" text="Date depart" />
                   <TableColumn fx:id="ColDA" prefWidth="105.0" text="Date arrivee" />
+                  <TableColumn fx:id="colEtat" prefWidth="105.0" text="Etat" />
               </columns>
             </TableView>
          </children>

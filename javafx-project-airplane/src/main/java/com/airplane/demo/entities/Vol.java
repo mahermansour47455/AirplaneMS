@@ -21,7 +21,9 @@ public class Vol {
 
     private ArrayList<escale> escales;
 
-    public Vol(int idVol, String aerropDepart, String aeroportArrivee, String heureDepart, String heureArrivee, String dateDepart, String dateArrivee) {
+    private SimpleStringProperty Etat;
+
+    public Vol(int idVol, String aerropDepart, String aeroportArrivee, String heureDepart, String heureArrivee, String dateDepart, String dateArrivee,String Etat) {
         this.idVol = new SimpleIntegerProperty(idVol);
         this.aerropDepart = new SimpleStringProperty(aerropDepart);
         this.aeroportArrivee = new SimpleStringProperty(aeroportArrivee);
@@ -29,6 +31,8 @@ public class Vol {
         this.heureArrivee = new SimpleStringProperty(heureArrivee);
         this.dateDepart = new SimpleStringProperty(dateDepart);
         this.dateArrivee = new SimpleStringProperty(dateArrivee);
+        this.Etat = new SimpleStringProperty(Etat);
+
     }
 
 
@@ -125,5 +129,15 @@ public class Vol {
         this.escales = escales;
     }
 
+    public String getEtat() {
+        return Etat.get();
+    }
 
+    public SimpleStringProperty etatProperty() {
+        return Etat;
+    }
+
+    public void setEtat(SimpleStringProperty etat) {
+        Etat = etat;
+    }
 }

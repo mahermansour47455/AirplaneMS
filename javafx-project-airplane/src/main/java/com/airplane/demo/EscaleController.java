@@ -59,6 +59,9 @@ public class EscaleController implements Initializable {
     private TableColumn<Vol,Integer> colId;
 
     @FXML
+    private TableColumn<Vol,String> colEtat;
+
+    @FXML
     private TextField heureArriver;
 
     @FXML
@@ -73,19 +76,8 @@ public class EscaleController implements Initializable {
         ColHD.setCellValueFactory(cellData -> cellData.getValue().dateDepartProperty());
         ColDA.setCellValueFactory(cellData -> cellData.getValue().heureArriveeProperty());
         ColDD.setCellValueFactory(cellData -> cellData.getValue().heureDepartProperty());
-
-
-
+        colEtat.setCellValueFactory(cellData -> cellData.getValue().etatProperty());
         TablVol.setItems(getVols());
-
-
-
-
-
-
-
-
-
     }
 
     public void AffecterEscaleAuVol() {
@@ -147,8 +139,10 @@ public class EscaleController implements Initializable {
                     String dateDepart = resultSet.getString("dateDepart");
                     String heureArriver = resultSet.getString("heureArrivee");
                     String heureDepart = resultSet.getString("heureDepart");
+                    String etat = resultSet.getString("etat");
 
-                    Vol vol = new Vol(id, aeroportArriver, aeroportDepart, dateArriver, dateDepart, heureArriver, heureDepart);
+
+                    Vol vol = new Vol(id, aeroportArriver, aeroportDepart, dateArriver, dateDepart, heureArriver, heureDepart, etat);
                     vols.add(vol);
 
                 }
@@ -176,6 +170,44 @@ public class EscaleController implements Initializable {
         currentStage.setTitle("Home");
         currentStage.setScene(homeScene);
         currentStage.show();
+
+    }
+
+    public void FermerVol(ActionEvent actionEvent) {
+        int idVol = TablVol.getSelectionModel().getSelectedItem().getIdVol();
+        Connection con = Connexion.getConnexionn();
+        PreparedStatement preparedStatement = null;
+
+        try {
+            String query = "UPDATE vol SET etat = ? WHERE idVol = ?";
+            preparedStatement = con.prepareStatement(query);
+            preparedStatement.setString(1, "Fermé");
+            preparedStatement.setInt(2, idVol);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("Vol fermé avec succès");
+                alert.showAndWait();
+                TablVol.setItems(getVols());
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
     }
 }
