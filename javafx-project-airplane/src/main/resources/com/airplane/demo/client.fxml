@@ -11,8 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="439.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.airplane.demo.Client">
+<AnchorPane prefHeight="546.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.airplane.demo.ClientController">
    <children>
       <Text layoutX="216.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Espace client">
          <font>
@@ -21,11 +20,11 @@
       </Text>
       <Text layoutX="285.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Liste des vols" />
       <Text layoutX="406.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Liste des escales de vol selectionner" />
-      <TableView layoutX="388.0" layoutY="303.0" prefHeight="129.0" prefWidth="225.0">
+      <TableView fx:id="tabEscale" layoutX="355.0" layoutY="303.0" prefHeight="212.0" prefWidth="398.0">
         <columns>
-          <TableColumn prefWidth="58.0" text="Aeroport" />
-          <TableColumn prefWidth="84.0" text="Heure depart" />
-            <TableColumn prefWidth="84.0" text="Heure arrive" />
+          <TableColumn fx:id="AEscale" prefWidth="118.4000244140625" text="Aeroport" />
+          <TableColumn fx:id="HEscale" prefWidth="140.0" text="Heure depart" />
+            <TableColumn fx:id="HAriiver" prefWidth="139.199951171875" text="Heure arrive" />
         </columns>
       </TableView>
       <Text layoutX="34.0" layoutY="299.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reserver ? Completer ce formulaire" />
@@ -47,7 +46,8 @@
             <TextField GridPane.columnIndex="1" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button mnemonicParsing="false" text="Reserver" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <Button mnemonicParsing="false" onAction="#btnReserver" text="Reserver" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <Button mnemonicParsing="false" onAction="#ListerLesEscales" text="lister les escales" GridPane.rowIndex="3" />
          </children>
       </GridPane>
       <TableView fx:id="TablVol" layoutX="9.0" layoutY="79.0" prefHeight="200.0" prefWidth="618.0">
@@ -59,7 +59,7 @@
             <TableColumn fx:id="ColHA" prefWidth="82.0" text="Heure arrivee" />
             <TableColumn fx:id="ColDD" text="Date depart" />
             <TableColumn fx:id="ColDA" prefWidth="83.0" text="Date arrivee" />
-            <TableColumn fx:id="etat" prefWidth="63.0" text="Etat" />
+            <TableColumn fx:id="colEtat" prefWidth="63.0" text="Etat" />
          </columns>
       </TableView>
    </children>

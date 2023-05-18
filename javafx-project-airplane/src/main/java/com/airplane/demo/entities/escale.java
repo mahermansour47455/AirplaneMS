@@ -1,5 +1,6 @@
 package com.airplane.demo.entities;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.text.SimpleDateFormat;
@@ -11,7 +12,7 @@ public class escale {
     private SimpleStringProperty heureDepart;
     private SimpleStringProperty heurArriver;
 
-    private Vol vol;
+    private SimpleIntegerProperty vol;
 
 
 
@@ -28,13 +29,11 @@ public class escale {
         this.idEscale.set(idEscale);
     }
 
-
-
-    public escale(String nomAeroport, String heureDepart, String heurArriver, Vol vol) {
+    public escale(String nomAeroport, String heureDepart, String heurArriver, int vol) {
         this.nomAeroport = new SimpleStringProperty(nomAeroport);
         this.heureDepart = new SimpleStringProperty(heureDepart);
         this.heurArriver = new SimpleStringProperty(heurArriver);
-        this.vol = vol;
+        this.vol = new SimpleIntegerProperty(vol);
     }
 
     public String getNomAeroport() {
@@ -73,11 +72,4 @@ public class escale {
         this.heurArriver.set(heurArriver);
     }
 
-    public Vol getVol() {
-        return vol;
-    }
-
-    public void setVol(Vol vol) {
-        this.vol = vol;
-    }
 }
