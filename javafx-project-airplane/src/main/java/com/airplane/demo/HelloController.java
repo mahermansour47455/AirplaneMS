@@ -37,7 +37,7 @@ public class HelloController implements Initializable {
     public void login(ActionEvent event) {
         PreparedStatement st=null;
         ResultSet rs=null;
-        Connection con = Connexion.getConnexion();
+        Connection con = Connexion.getConnexionn();
         try{
             String sql="SELECT * FROM `personne` WHERE `email`=? AND `password`=?";
             st=con.prepareStatement(sql);
@@ -52,9 +52,9 @@ public class HelloController implements Initializable {
                 alert.setContentText("Login successful");
                 alert.showAndWait();
 
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("home.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("compagnie.fxml"));
                 Parent home = fxmlLoader.load();
-                Scene homeScene = new Scene(home, 695, 430);
+                Scene homeScene = new Scene(home, 680, 410);
 
                 Stage currentStage = (Stage) btnlogin.getScene().getWindow();
                 currentStage.setTitle("Home");

@@ -13,8 +13,8 @@ public class Vol {
     private SimpleStringProperty aeroportArrivee;
     private SimpleStringProperty heureDepart;
     private SimpleStringProperty heureArrivee;
-    private SimpleStringProperty dateDepart;
-    private SimpleStringProperty dateArrivee;
+    private SimpleDateFormat dateDepart;
+    private SimpleDateFormat dateArrivee;
 
 
     private ArrayList<escale> escales;
@@ -25,8 +25,8 @@ public class Vol {
         this.aeroportArrivee = new SimpleStringProperty(aeroportArrivee);
         this.heureDepart = new SimpleStringProperty(heureDepart);
         this.heureArrivee = new SimpleStringProperty(heureArrivee);
-        this.dateDepart = new SimpleStringProperty(dateDepart);
-        this.dateArrivee = new SimpleStringProperty(dateArrivee);
+        this.dateDepart = new SimpleDateFormat(dateDepart);
+        this.dateArrivee = new SimpleDateFormat(dateArrivee);
     }
 
 
@@ -90,30 +90,21 @@ public class Vol {
         this.heureArrivee.set(heureArrivee);
     }
 
-    public String getDateDepart() {
-        return dateDepart.get();
-    }
-
-    public SimpleStringProperty dateDepartProperty() {
+    public SimpleDateFormat getDateDepart() {
         return dateDepart;
     }
 
-    public void setDateDepart(String dateDepart) {
-        this.dateDepart.set(dateDepart);
+    public void setDateDepart(SimpleDateFormat dateDepart) {
+        this.dateDepart = dateDepart;
     }
 
-    public String getDateArrivee() {
-        return dateArrivee.get();
-    }
-
-    public SimpleStringProperty dateArriveeProperty() {
+    public SimpleDateFormat getDateArrivee() {
         return dateArrivee;
     }
 
-    public void setDateArrivee(String dateArrivee) {
-        this.dateArrivee.set(dateArrivee);
+    public void setDateArrivee(SimpleDateFormat dateArrivee) {
+        this.dateArrivee = dateArrivee;
     }
-
 
     public ArrayList<escale> getEscales() {
         return escales;
