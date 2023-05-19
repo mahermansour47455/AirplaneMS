@@ -1,5 +1,6 @@
 package com.airplane.demo;
 
+import com.airplane.demo.entities.Reservation;
 import com.airplane.demo.entities.Vol;
 import com.airplane.demo.entities.escale;
 import javafx.collections.FXCollections;
@@ -12,6 +13,7 @@ import javafx.scene.control.*;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
@@ -52,6 +54,9 @@ public class ClientController implements Initializable {
     private TableColumn<escale,String> HAriiver;
 
     @FXML
+    private TextField VnumPassport;
+
+    @FXML
     private TableColumn<escale,String> HEscale;
 
     @FXML
@@ -70,6 +75,22 @@ public class ClientController implements Initializable {
     @FXML
     private TextField Vpassport;
 
+    //table Reservation
+    @FXML
+    private TableColumn<Reservation,String> IdNomClient;
+
+    @FXML
+    private TableColumn<Reservation,Integer> IdNumVol;
+
+    @FXML
+    private TableColumn<Reservation,String> IdPassport;
+
+    @FXML
+    private TableColumn<Reservation,String> IdPrenomClient;
+
+    @FXML
+    private TableView<Reservation> tabReservation;
+
 
 
 
@@ -86,8 +107,56 @@ public class ClientController implements Initializable {
         ColDD.setCellValueFactory(cellData -> cellData.getValue().heureDepartProperty());
         colEtat.setCellValueFactory(cellData -> cellData.getValue().etatProperty());
         TablVol.setItems(getVols());
+        //table Reservation
+
+
     }
-    private ObservableList<Vol> getVols() {
+    @FXML
+    void listerReservation(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText("Reservation");
+        alert.showAndWait();
+
+
+
+
+        IdNomClient.setCellValueFactory(cellData -> cellData.getValue().nomClientProperty());
+        IdPrenomClient.setCellValueFactory(cellData -> cellData.getValue().prenomClientProperty());
+        IdPassport.setCellValueFactory(cellData -> cellData.getValue().numPassportProperty());
+        IdNumVol.setCellValueFactory(cellData -> cellData.getValue().numVolProperty().asObject());
+        tabReservation.setItems(getReservation());
+
+    }
+    private ObservableList<Reservation>getReservation()
+    {
+        String numPassport = VnumPassport.getText();
+        ObservableList<Reservation> reservations = FXCollections.observableArrayList();
+        Connection con = Connexion.getConnexionn();
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = con.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM `Reservation` where numPassport='"+numPassport+"'");
+            while (resultSet.next()) {
+                String nom = resultSet.getString("nomClient");
+                String prenom = resultSet.getString("prenomClient");
+                String passport = resultSet.getString("numPassport");
+                int numVol = resultSet.getInt("numVol");
+                Reservation reservation = new Reservation(nom,prenom,passport,numVol);
+                reservations.add(reservation);
+
+            }
+    } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return reservations;
+    }
+
+
+
+        private ObservableList<Vol> getVols() {
         ObservableList<Vol> vols = FXCollections.observableArrayList();
 
         Connection con = Connexion.getConnexionn();
@@ -169,8 +238,6 @@ public class ClientController implements Initializable {
                 String heureDepart = resultSet.getString("heureArrivee");
                 escale escale = new escale(nomAeroport, heureArriver, heureDepart, idVol);
                 escales.add(escale);
-
-
             }
 
 
