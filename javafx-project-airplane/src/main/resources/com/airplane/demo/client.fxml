@@ -43,9 +43,9 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nom" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Prenom" GridPane.rowIndex="1" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Passport" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="vNom" GridPane.columnIndex="1" />
+            <TextField fx:id="vPrenom" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="Vpassport" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Button mnemonicParsing="false" onAction="#btnReserver" text="Reserver" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
             <Button mnemonicParsing="false" onAction="#ListerLesEscales" text="lister les escales" GridPane.rowIndex="3" />
          </children>

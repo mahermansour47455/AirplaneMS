@@ -1,16 +1,22 @@
 package com.airplane.demo.entities;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 public class Reservation {
 
     public SimpleIntegerProperty idReservation;
-    public personne client;
-    public Vol vol;
-    public Reservation(SimpleIntegerProperty idReservation, personne client, Vol vol) {
-        this.idReservation = idReservation;
-        this.client = client;
-        this.vol = vol;
+    private SimpleStringProperty nomClient;
+    private SimpleStringProperty prenomClient;
+    private SimpleStringProperty numPassport;
+    private SimpleIntegerProperty numVol;
+    public Reservation(String nomClient, String prenomClient, String numPassport, int vol) {
+
+        this.nomClient = new SimpleStringProperty(nomClient);
+        this.prenomClient = new SimpleStringProperty(prenomClient);
+        this.numPassport = new SimpleStringProperty(numPassport);
+        this.numVol = new SimpleIntegerProperty(vol);
+
     }
 
     public int getIdReservation() {
@@ -25,19 +31,51 @@ public class Reservation {
         this.idReservation.set(idReservation);
     }
 
-    public personne getClient() {
-        return client;
+    public String getNomClient() {
+        return nomClient.get();
     }
 
-    public void setClient(personne client) {
-        this.client = client;
+    public SimpleStringProperty nomClientProperty() {
+        return nomClient;
     }
 
-    public Vol getVol() {
-        return vol;
+    public void setNomClient(String nomClient) {
+        this.nomClient.set(nomClient);
     }
 
-    public void setVol(Vol vol) {
-        this.vol = vol;
+    public String getPrenomClient() {
+        return prenomClient.get();
+    }
+
+    public SimpleStringProperty prenomClientProperty() {
+        return prenomClient;
+    }
+
+    public void setPrenomClient(String prenomClient) {
+        this.prenomClient.set(prenomClient);
+    }
+
+    public String getNumPassport() {
+        return numPassport.get();
+    }
+
+    public SimpleStringProperty numPassportProperty() {
+        return numPassport;
+    }
+
+    public void setNumPassport(String numPassport) {
+        this.numPassport.set(numPassport);
+    }
+
+    public int getNumVol() {
+        return numVol.get();
+    }
+
+    public SimpleIntegerProperty numVolProperty() {
+        return numVol;
+    }
+
+    public void setNumVol(int numVol) {
+        this.numVol.set(numVol);
     }
 }

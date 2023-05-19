@@ -60,6 +60,16 @@ public class ClientController implements Initializable {
     @FXML
     private TableColumn<escale,String> AEscale;
 
+    //client
+    @FXML
+    private TextField vNom;
+
+    @FXML
+    private TextField vPrenom;
+
+    @FXML
+    private TextField Vpassport;
+
 
 
 
@@ -111,12 +121,27 @@ public class ClientController implements Initializable {
         return vols;
     }
     public void btnReserver(ActionEvent actionEvent) {
+        int idVol = TablVol.getSelectionModel().getSelectedItem().getIdVol();
+        String nom = vNom.getText();
+        String prenom = vPrenom.getText();
+        String passport = Vpassport.getText();
+        Connection con = Connexion.getConnexionn();
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = con.createStatement();
+            statement.executeUpdate("INSERT INTO `Reservation`(`nomClient`, `prenomClient`, `numPassport`, `numVol`) VALUES ('"+nom+"','"+prenom+"','"+passport+"','"+idVol+"')");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Reservation effectuer avec succes");
+            alert.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information Dialog");
-        alert.setHeaderText(null);
-        alert.setContentText("Reservation effectuée avec succès");
-        alert.showAndWait();
+        }
+
+
     }
 
     public void ListerLesEscales(ActionEvent evnet)
