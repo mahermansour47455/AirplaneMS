@@ -99,7 +99,7 @@ public class VolController implements Initializable {
         alert.showAndWait();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("escale.fxml"));
         Parent home = fxmlLoader.load();
-        Scene homeScene = new Scene(home, 680, 410);
+        Scene homeScene = new Scene(home, 1000, 800);
 
         Stage currentStage = (Stage) AddEscales.getScene().getWindow();
         currentStage.setTitle("Home");

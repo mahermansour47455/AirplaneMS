@@ -71,7 +71,7 @@
                     </rowConstraints>
                      <children>
                         <Button fx:id="btnlogin" mnemonicParsing="false" onAction="#login" text="Login" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                        <Button fx:id="btncreateaccount" mnemonicParsing="false" text="Create a new account" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <Button fx:id="ClientBtn" mnemonicParsing="false" onAction="#ClientBtn" text="Entrer en tant que client" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                      </children>
                   </GridPane>
                </children>

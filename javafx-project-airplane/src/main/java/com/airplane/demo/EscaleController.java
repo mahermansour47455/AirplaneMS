@@ -66,6 +66,75 @@ public class EscaleController implements Initializable {
 
     @FXML
     private TextField heureDepart;
+    @FXML
+    private TextField aeroportArriver;
+
+    @FXML
+    private TextField aeroportDepart;
+
+    @FXML
+    private DatePicker dateArriver;
+
+    @FXML
+    private DatePicker datedepart;
+
+    @FXML
+    private TextField vharriver;
+
+    @FXML
+    private TextField vhdepart;
+
+    @FXML
+    private Button btnaddvol;
+
+    @FXML
+    void addVol(ActionEvent event) {
+        PreparedStatement st=null;
+        ResultSet rs=null;
+        Connection con = Connexion.getConnexionn();
+        String dateArriver = this.dateArriver.getValue().toString();
+        String datedepart = this.datedepart.getValue().toString();
+        String varriver = this.aeroportArriver.getText();
+        String vdepart = this.aeroportDepart.getText();
+        String vharriver = this.vharriver.getText();
+        String vhdepart = this.vhdepart.getText();
+        try{
+
+            String sql="INSERT INTO vol(aerropDepart,aeroportArrivee,heureDepart,heureArrivee,dateDepart,dateArrivee) VALUES (?,?,?,?,?,?)";
+            st=con.prepareStatement(sql);
+            st.setString(1, vdepart);
+            st.setString(2, varriver);
+            st.setString(3, vhdepart);
+            st.setString(4, vharriver);
+            st.setString(5, datedepart);
+            st.setString(6, dateArriver);
+            int e=st.executeUpdate();
+            if(e == 1){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("Vol added successfully");
+                alert.showAndWait();
+                TablVol.setItems(getVols());
+                aeroportArriver.setText("");
+                aeroportDepart.setText("");
+               this. vharriver.setText("");
+              this.  vhdepart.setText("");
+
+
+
+            }
+            else{
+                System.out.println("error");
+            }
+
+        }catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -105,6 +174,11 @@ public class EscaleController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setContentText("Escale ajoutée avec succès");
                 alert.showAndWait();
+                 Aeroport.setText("");
+                heureArriver.setText("");
+                 heureDepart.setText("");
+
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -164,7 +238,7 @@ public class EscaleController implements Initializable {
         alert.showAndWait();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("compagnie.fxml"));
         Parent home = fxmlLoader.load();
-        Scene homeScene = new Scene(home, 680, 410);
+        Scene homeScene = new Scene(home, 1000, 800);
 
         Stage currentStage = (Stage) RetournerAuVol.getScene().getWindow();
         currentStage.setTitle("Home");
@@ -267,6 +341,129 @@ public class EscaleController implements Initializable {
                         alert.setTitle("Information Dialog");
                         alert.setHeaderText(null);
                         alert.setContentText("Vol ouvert avec succès");
+                        alert.showAndWait();
+                        TablVol.setItems(getVols());
+
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } finally {
+                    try {
+                        if (preparedStatement != null) {
+                        }
+                        if (con != null) {
+                            con.close();
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+            }
+        }
+    }
+
+    @FXML
+    public void ModifierVol(ActionEvent event)
+    {
+        if (TablVol.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez sélectionner un vol");
+            alert.showAndWait();
+            return;
+        } else {
+            if (TablVol.getSelectionModel().getSelectedItem().getEtat().equals("Fermé")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText(null);
+                alert.setContentText("Ce vol est fermé");
+                alert.showAndWait();
+                return;
+            } else {
+                int idVol = TablVol.getSelectionModel().getSelectedItem().getIdVol();
+
+                Connection con = Connexion.getConnexionn();
+                PreparedStatement preparedStatement = null;
+
+
+                try {
+                    String query = "UPDATE vol SET aeroportArrivee = ?, aerropDepart = ?, heureArrivee = ?, heureDepart = ? WHERE idVol = ?";
+                    preparedStatement = con.prepareStatement(query);
+                    preparedStatement.setString(1, aeroportArriver.getText());
+                    preparedStatement.setString(2, aeroportDepart.getText());
+                    preparedStatement.setString(3, heureArriver.getText());
+                    preparedStatement.setString(4, heureDepart.getText());
+                    preparedStatement.setInt(5, idVol);
+
+                    int rowsAffected = preparedStatement.executeUpdate();
+
+                    if (rowsAffected > 0) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Information Dialog");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Vol modifié avec succès");
+                        alert.showAndWait();
+                        TablVol.setItems(getVols());
+
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } finally {
+                    try {
+                        if (preparedStatement != null) {
+                        }
+                        if (con != null) {
+                            con.close();
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+            }
+        }
+
+
+
+    }
+    @FXML
+    public void SupprmerVolBtn(ActionEvent event)
+    {
+        if (TablVol.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez sélectionner un vol");
+            alert.showAndWait();
+            return;
+        } else {
+            if (TablVol.getSelectionModel().getSelectedItem().getEtat().equals("Fermé")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText(null);
+                alert.setContentText("Ce vol est fermé");
+                alert.showAndWait();
+                return;
+            } else {
+                int idVol = TablVol.getSelectionModel().getSelectedItem().getIdVol();
+
+                Connection con = Connexion.getConnexionn();
+                PreparedStatement preparedStatement = null;
+
+                try {
+                    String query = "DELETE FROM vol WHERE idVol = ?";
+                    preparedStatement = con.prepareStatement(query);
+                    preparedStatement.setInt(1, idVol);
+
+                    int rowsAffected = preparedStatement.executeUpdate();
+
+                    if (rowsAffected > 0) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Information Dialog");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Vol supprimé avec succès");
                         alert.showAndWait();
                         TablVol.setItems(getVols());
 

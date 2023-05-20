@@ -262,76 +262,89 @@ public class ClientController implements Initializable {
     @FXML
     public void ConfirmerReservation(ActionEvent event)
     {
-        if(tabReservation.getSelectionModel().getSelectedItem().getEtat().equals("Confirmer"))
-        {
+        if(tabReservation.getSelectionModel().getSelectedItem()!=null) {
+            if (tabReservation.getSelectionModel().getSelectedItem().getEtat().equals("Confirmer")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("Reservation deja confirmer");
+                alert.showAndWait();
+            } else {
+                int idReservation = tabReservation.getSelectionModel().getSelectedItem().getIdReservation();
+                System.out.println(idReservation);
+                Connection con = Connexion.getConnexionn();
+                Statement statement = null;
+                ResultSet resultSet = null;
+                PreparedStatement preparedStatement = null;
+
+                try {
+                    String query = "UPDATE reservation SET etat = ? WHERE idReservation = ?";
+                    preparedStatement = con.prepareStatement(query);
+                    preparedStatement.setString(1, "Confirmer");
+                    preparedStatement.setInt(2, idReservation);
+                    preparedStatement.executeUpdate();
+                    tabReservation.setItems(getReservation());
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Reservation annuler avec succes");
+                    alert.showAndWait();
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                }
+            }
+        }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
-            alert.setContentText("Reservation deja confirmer");
+            alert.setContentText("Veuillez selectionner une reservation");
             alert.showAndWait();
-        }
-        else {
-            int idReservation = tabReservation.getSelectionModel().getSelectedItem().getIdReservation();
-            System.out.println(idReservation);
-            Connection con = Connexion.getConnexionn();
-            Statement statement = null;
-            ResultSet resultSet = null;
-            PreparedStatement preparedStatement = null;
-
-            try {
-                String query = "UPDATE reservation SET etat = ? WHERE idReservation = ?";
-                preparedStatement = con.prepareStatement(query);
-                preparedStatement.setString(1, "Confirmer");
-                preparedStatement.setInt(2, idReservation);
-                preparedStatement.executeUpdate();
-                tabReservation.setItems(getReservation());
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information Dialog");
-                alert.setHeaderText(null);
-                alert.setContentText("Reservation annuler avec succes");
-                alert.showAndWait();
-            } catch (Exception e) {
-                e.printStackTrace();
-
-            }
         }
 
 
     }
     public void AnnulerReservation(ActionEvent event)
     {
-        if(tabReservation.getSelectionModel().getSelectedItem().getEtat().equals("Annuler"))
-        {
+        if(tabReservation.getSelectionModel().getSelectedItem()!=null) {
+            if (tabReservation.getSelectionModel().getSelectedItem().getEtat().equals("Annuler")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("Reservation deja Annuler");
+                alert.showAndWait();
+            } else {
+                int idReservation = tabReservation.getSelectionModel().getSelectedItem().getIdReservation();
+                System.out.println(idReservation);
+                Connection con = Connexion.getConnexionn();
+                Statement statement = null;
+                ResultSet resultSet = null;
+                PreparedStatement preparedStatement = null;
+
+                try {
+                    String query = "UPDATE reservation SET etat = ? WHERE idReservation = ?";
+                    preparedStatement = con.prepareStatement(query);
+                    preparedStatement.setString(1, "Annuler");
+                    preparedStatement.setInt(2, idReservation);
+                    preparedStatement.executeUpdate();
+                    tabReservation.setItems(getReservation());
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Reservation annuler avec succes");
+                    alert.showAndWait();
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                }
+            }
+        }
+        else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
-            alert.setContentText("Reservation deja Annuler");
+            alert.setContentText("Veuillez selectionner une reservation");
             alert.showAndWait();
-        }
-        else {
-            int idReservation = tabReservation.getSelectionModel().getSelectedItem().getIdReservation();
-            System.out.println(idReservation);
-            Connection con = Connexion.getConnexionn();
-            Statement statement = null;
-            ResultSet resultSet = null;
-            PreparedStatement preparedStatement = null;
-
-            try {
-                String query = "UPDATE reservation SET etat = ? WHERE idReservation = ?";
-                preparedStatement = con.prepareStatement(query);
-                preparedStatement.setString(1, "Annuler");
-                preparedStatement.setInt(2, idReservation);
-                preparedStatement.executeUpdate();
-                tabReservation.setItems(getReservation());
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information Dialog");
-                alert.setHeaderText(null);
-                alert.setContentText("Reservation annuler avec succes");
-                alert.showAndWait();
-            } catch (Exception e) {
-                e.printStackTrace();
-
-            }
         }
     }
 

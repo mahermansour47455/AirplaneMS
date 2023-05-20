@@ -115,81 +115,105 @@ public class AdminPanelController implements Initializable {
 
     public void RechercherParDate(ActionEvent event) {
         ObservableList<Vol> vols = FXCollections.observableArrayList();
-        Date dateDepart=java.sql.Date.valueOf(DateRech.getValue());
-        Date dateDepart1=java.sql.Date.valueOf(DateDepartId.getValue());
-        Connection con = Connexion.getConnexionn();
-        Statement statement = null;
-        ResultSet resultSet = null;
-        List<Vol> tempVols = new ArrayList<>();
-        try {
-            statement = con.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM `vol` WHERE dateDepart = '" + dateDepart + "' and dateArrivee = '" + dateDepart1 + "'");
-            //je veut tester si il y a des resultats
-            while (resultSet.next()) {
-                // Récupérer les données du résultat
-                int id = resultSet.getInt("idVol");
-                String aeroportArriver = resultSet.getString("aeroportArrivee");
-                String aeroportDepart = resultSet.getString("aerropDepart");
-                String dateArriver = resultSet.getString("dateArrivee");
-                String dateDeparte = resultSet.getString("dateDepart");
-                String heureArriver = resultSet.getString("heureArrivee");
-                String heureDepart = resultSet.getString("heureDepart");
-                String etat = resultSet.getString("etat");
+        if (DateRech.getValue() != null && DateDepartId.getValue() != null) {
 
-                // Créer une instance de Vol
-                Vol vol = new Vol(id, aeroportArriver, aeroportDepart, dateArriver, dateDeparte, heureArriver, heureDepart, etat);
+            Date dateDepart = java.sql.Date.valueOf(DateRech.getValue());
+            Date dateDepart1 = java.sql.Date.valueOf(DateDepartId.getValue());
+            Connection con = Connexion.getConnexionn();
+            Statement statement = null;
+            ResultSet resultSet = null;
+            List<Vol> tempVols = new ArrayList<>();
+            try {
+                statement = con.createStatement();
+                resultSet = statement.executeQuery("SELECT * FROM `vol` WHERE dateDepart = '" + dateDepart + "' and dateArrivee = '" + dateDepart1 + "'");
+                //je veut tester si il y a des resultats
+                while (resultSet.next()) {
+                    // Récupérer les données du résultat
+                    int id = resultSet.getInt("idVol");
+                    String aeroportArriver = resultSet.getString("aeroportArrivee");
+                    String aeroportDepart = resultSet.getString("aerropDepart");
+                    String dateArriver = resultSet.getString("dateArrivee");
+                    String dateDeparte = resultSet.getString("dateDepart");
+                    String heureArriver = resultSet.getString("heureArrivee");
+                    String heureDepart = resultSet.getString("heureDepart");
+                    String etat = resultSet.getString("etat");
 
-                // Ajouter le vol à la liste vols
-                tempVols.add(vol);
-            }
+                    // Créer une instance de Vol
+                    Vol vol = new Vol(id, aeroportArriver, aeroportDepart, dateArriver, dateDeparte, heureArriver, heureDepart, etat);
+
+                    // Ajouter le vol à la liste vols
+                    tempVols.add(vol);
+                }
 
 // Vérifier si la liste vols est vide
-            if (tempVols.isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Erreur");
-                alert.setHeaderText("Erreur");
-                alert.setContentText("Aucun vol n'est disponible");
-                alert.showAndWait();
-            } else {
-                vols.addAll(tempVols);
-                TablVol.setItems(vols); // Refresh the TableView with the updated data
+                if (tempVols.isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Erreur");
+                    alert.setHeaderText("Erreur");
+                    alert.setContentText("Aucun vol n'est disponible");
+                    alert.showAndWait();
+                } else {
+                    vols.addAll(tempVols);
+                    TablVol.setItems(vols); // Refresh the TableView with the updated data
 
-                System.out.println("ok");
+                    System.out.println("ok");
+                }
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Erreur");
+            alert.setContentText("Veuillez saisir le date de depart et la date d'arriver");
+            alert.showAndWait();
         }
     }
     private ObservableList<escale> getEscale() {
         ObservableList<escale> escales = FXCollections.observableArrayList();
-        int idVol = TablVol.getSelectionModel().getSelectedItem().getIdVol();
-        System.out.println(idVol);
+        if(TablVol.getSelectionModel().getSelectedItem() != null) {
+            //recuperer l'id du vol selectionner (idVol
+            int idVol = TablVol.getSelectionModel().getSelectedItem().getIdVol();
+            System.out.println(idVol);
 
-        Connection con = Connexion.getConnexionn();
-        Statement statement = null;
-        ResultSet resultSet = null;
-        try {
-            statement = con.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM escale where idVol = "+idVol+"");
-            while (resultSet.next()) {
-                int id = resultSet.getInt("idEscale");
-                String nomAeroport = resultSet.getString("nomAeroport");
-                String heureArriver = resultSet.getString("heureDepart");
-                String heureDepart = resultSet.getString("heureArrivee");
-                escale escale = new escale(nomAeroport, heureArriver, heureDepart, idVol);
-                escales.add(escale);
+            Connection con = Connexion.getConnexionn();
+            Statement statement = null;
+            ResultSet resultSet = null;
+            try {
+                statement = con.createStatement();
+                resultSet = statement.executeQuery("SELECT * FROM escale where idVol = " + idVol + "");
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("idEscale");
+                    String nomAeroport = resultSet.getString("nomAeroport");
+                    String heureArriver = resultSet.getString("heureDepart");
+                    String heureDepart = resultSet.getString("heureArrivee");
+                    escale escale = new escale(nomAeroport, heureArriver, heureDepart, idVol);
+                    escales.add(escale);
 
+
+                }
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
 
             }
 
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
+            return escales;
         }
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Erreur");
+            alert.setContentText("Veuillez selectionner un vol");
+            alert.showAndWait();
 
-        return escales;
+
+            }
+        return null;
+
     }
     public void ListerLesEscales(ActionEvent evnet)
     {
@@ -206,7 +230,7 @@ public class AdminPanelController implements Initializable {
     public void listerReservation(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ListeReservation.fxml"));
         Parent home = fxmlLoader.load();
-        Scene homeScene = new Scene(home, 680, 410);
+        Scene homeScene = new Scene(home, 1000, 800);
 
         Stage currentStage = (Stage) BtnReservation.getScene().getWindow();
         currentStage.setTitle("Home");
@@ -227,7 +251,31 @@ public class AdminPanelController implements Initializable {
 
     public void listerLesVols(ActionEvent event)
     {
+        colId.setCellValueFactory(cellData -> cellData.getValue().idVolProperty().asObject());
+        ColAd.setCellValueFactory(cellData -> cellData.getValue().aeroportArriveeProperty());
+        ColAA.setCellValueFactory(cellData -> cellData.getValue().aerropDepartProperty());
+        ColHA.setCellValueFactory(cellData -> cellData.getValue().dateArriveeProperty());
+        ColHD.setCellValueFactory(cellData -> cellData.getValue().dateDepartProperty());
+        ColDA.setCellValueFactory(cellData -> cellData.getValue().heureArriveeProperty());
+        ColDD.setCellValueFactory(cellData -> cellData.getValue().heureDepartProperty());
+        etat.setCellValueFactory(cellData -> cellData.getValue().etatProperty());
+        TablVol.setItems(getVols());
 
+    }
+
+    @FXML
+    private Button btnLogout;
+
+    @FXML
+    public void Logout(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
+        Parent home = fxmlLoader.load();
+        Scene homeScene = new Scene(home, 1000, 800);
+
+        Stage currentStage = (Stage) btnLogout.getScene().getWindow();
+        currentStage.setTitle("Home");
+        currentStage.setScene(homeScene);
+        currentStage.show();
     }
 
 }

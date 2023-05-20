@@ -38,6 +38,7 @@
                   <Button mnemonicParsing="false" onAction="#lesAeroports" prefHeight="26.0" prefWidth="90.0" text="les aeroports" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                </children>
             </GridPane>
+            <Button fx:id="btnLogout" layoutX="51.0" layoutY="651.0" mnemonicParsing="false" onAction="#Logout" text="Logout" />
          </children>
       </AnchorPane>
       <TableView fx:id="TablVol" layoutX="173.0" layoutY="206.0" prefHeight="309.0" prefWidth="618.0">

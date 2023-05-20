@@ -14,11 +14,12 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class HelloController implements Initializable {
     @FXML
-    private Button btncreateaccount;
+    private Button ClientBtn;
 
     @FXML
     private Button btnlogin;
@@ -34,7 +35,7 @@ public class HelloController implements Initializable {
 
     }
 
-    public void login(ActionEvent event) {
+    public void login(ActionEvent event) throws SQLException {
         PreparedStatement st=null;
         ResultSet rs=null;
         Connection con = Connexion.getConnexionn();
@@ -51,15 +52,34 @@ public class HelloController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setContentText("Login successful");
                 alert.showAndWait();
+                try {
+                    if(rs.getString("role").equals("ADMIN"))
+                    {
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("adminPanel.fxml"));
+                        Parent home = fxmlLoader.load();
+                        Scene homeScene = new Scene(home, 1000, 800);
 
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("compagnie.fxml"));
-                Parent home = fxmlLoader.load();
-                Scene homeScene = new Scene(home, 680, 410);
+                        Stage currentStage = (Stage) btnlogin.getScene().getWindow();
+                        currentStage.setTitle("Home");
+                        currentStage.setScene(homeScene);
+                        currentStage.show();
+                    }
+                    else{
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("escale.fxml"));
+                        Parent home = fxmlLoader.load();
+                        Scene homeScene = new Scene(home, 680, 410);
 
-                Stage currentStage = (Stage) btnlogin.getScene().getWindow();
-                currentStage.setTitle("Home");
-                currentStage.setScene(homeScene);
-                currentStage.show();
+                        Stage currentStage = (Stage) btnlogin.getScene().getWindow();
+                        currentStage.setTitle("Home");
+                        currentStage.setScene(homeScene);
+                        currentStage.show();
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("error");
+
+
+                }
             }
             else{
                 System.out.println("login failed");
@@ -71,6 +91,17 @@ public class HelloController implements Initializable {
             System.out.println("error");
         }
 
+
+    }
+    public void ClientBtn(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("client.fxml"));
+        Parent home = fxmlLoader.load();
+        Scene homeScene = new Scene(home, 1500, 800);
+
+        Stage currentStage = (Stage) btnlogin.getScene().getWindow();
+        currentStage.setTitle("Home");
+        currentStage.setScene(homeScene);
+        currentStage.show();
 
     }
 }
