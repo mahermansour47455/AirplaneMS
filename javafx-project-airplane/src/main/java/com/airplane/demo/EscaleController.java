@@ -174,41 +174,119 @@ public class EscaleController implements Initializable {
     }
 
     public void FermerVol(ActionEvent actionEvent) {
-        int idVol = TablVol.getSelectionModel().getSelectedItem().getIdVol();
-        Connection con = Connexion.getConnexionn();
-        PreparedStatement preparedStatement = null;
-
-        try {
-            String query = "UPDATE vol SET etat = ? WHERE idVol = ?";
-            preparedStatement = con.prepareStatement(query);
-            preparedStatement.setString(1, "Fermé");
-            preparedStatement.setInt(2, idVol);
-
-            int rowsAffected = preparedStatement.executeUpdate();
-
-            if (rowsAffected > 0) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information Dialog");
+        if (TablVol.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez sélectionner un vol");
+            alert.showAndWait();
+            return;
+        } else {
+            if (TablVol.getSelectionModel().getSelectedItem().getEtat().equals("Fermé")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
                 alert.setHeaderText(null);
-                alert.setContentText("Vol fermé avec succès");
+                alert.setContentText("Ce vol est déjà fermé");
                 alert.showAndWait();
-                TablVol.setItems(getVols());
+                return;
+            } else {
+                // get the selected item (idVol
+                int idVol = TablVol.getSelectionModel().getSelectedItem().getIdVol();
 
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                if (preparedStatement != null) {
+                Connection con = Connexion.getConnexionn();
+                PreparedStatement preparedStatement = null;
+
+                try {
+                    String query = "UPDATE vol SET etat = ? WHERE idVol = ?";
+                    preparedStatement = con.prepareStatement(query);
+                    preparedStatement.setString(1, "Fermé");
+                    preparedStatement.setInt(2, idVol);
+
+                    int rowsAffected = preparedStatement.executeUpdate();
+
+                    if (rowsAffected > 0) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Information Dialog");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Vol fermé avec succès");
+                        alert.showAndWait();
+                        TablVol.setItems(getVols());
+
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } finally {
+                    try {
+                        if (preparedStatement != null) {
+                        }
+                        if (con != null) {
+                            con.close();
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+
             }
         }
+    }
+    @FXML
+    public void OuvrirVolBtn(ActionEvent event)
+    {
+        if (TablVol.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez sélectionner un vol");
+            alert.showAndWait();
+            return;
+        } else {
+            if (TablVol.getSelectionModel().getSelectedItem().getEtat().equals("Ouvert")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText(null);
+                alert.setContentText("Ce vol est déjà ouvert");
+                alert.showAndWait();
+                return;
+            } else {
+                int idVol = TablVol.getSelectionModel().getSelectedItem().getIdVol();
 
+                Connection con = Connexion.getConnexionn();
+                PreparedStatement preparedStatement = null;
+
+                try {
+                    String query = "UPDATE vol SET etat = ? WHERE idVol = ?";
+                    preparedStatement = con.prepareStatement(query);
+                    preparedStatement.setString(1, "Ouvert");
+                    preparedStatement.setInt(2, idVol);
+
+                    int rowsAffected = preparedStatement.executeUpdate();
+
+                    if (rowsAffected > 0) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Information Dialog");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Vol ouvert avec succès");
+                        alert.showAndWait();
+                        TablVol.setItems(getVols());
+
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } finally {
+                    try {
+                        if (preparedStatement != null) {
+                        }
+                        if (con != null) {
+                            con.close();
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+            }
+        }
     }
 }
 

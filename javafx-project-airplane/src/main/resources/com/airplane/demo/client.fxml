@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.airplane.demo.ClientController">
+<AnchorPane prefHeight="700.0" prefWidth="2500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.airplane.demo.ClientController">
    <children>
       <Text layoutX="440.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Espace client">
          <font>
@@ -78,16 +78,20 @@
             </GridPane>
          </children>
       </AnchorPane>
-      <TableView fx:id="tabReservation" layoutX="917.0" layoutY="121.0" prefHeight="352.0" prefWidth="562.0">
+      <TableView fx:id="tabReservation" layoutX="979.0" layoutY="121.0" prefHeight="352.0" prefWidth="498.0">
          <columns>
             <TableColumn fx:id="IdNomClient" prefWidth="82.4000244140625" text="NomClient" />
-            <TableColumn fx:id="IdPrenomClient" prefWidth="167.2000732421875" text="PrenomClient" />
-            <TableColumn fx:id="IdPassport" minWidth="5.5999755859375" prefWidth="157.5999755859375" text="NumPassport" />
-            <TableColumn fx:id="IdNumVol" prefWidth="212.0" text="NumVol" />
+            <TableColumn fx:id="IdPrenomClient" prefWidth="85.5999755859375" text="PrenomClient" />
+            <TableColumn fx:id="IdPassport" minWidth="5.5999755859375" prefWidth="124.7999267578125" text="NumPassport" />
+            <TableColumn fx:id="IdNumVol" prefWidth="58.4000244140625" text="NumVol" />
+            <TableColumn fx:id="EtatReservation" minWidth="5.5999755859375" prefWidth="100.0001220703125" text="Etat" />
+            <TableColumn fx:id="Idreservation" minWidth="5.5999755859375" prefWidth="38.39990234375" text="Id" />
          </columns>
       </TableView>
       <Button layoutX="1059.0" layoutY="602.0" mnemonicParsing="false" onAction="#listerReservation" text="Consulter Votre Reservations" />
       <TextField fx:id="VnumPassport" layoutX="1257.0" layoutY="602.0" />
       <Text layoutX="1059.0" layoutY="561.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Si vous Vouler Consulter Vos Reservation entere Votre Num Passport" />
+      <Button layoutX="1092.0" layoutY="685.0" mnemonicParsing="false" onAction="#ConfirmerReservation" text="Confirmer" />
+      <Button layoutX="1248.0" layoutY="685.0" mnemonicParsing="false" onAction="#AnnulerReservation" text="Annuler" />
    </children>
 </AnchorPane>

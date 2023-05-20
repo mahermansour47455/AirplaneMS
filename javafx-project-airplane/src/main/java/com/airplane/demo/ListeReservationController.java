@@ -23,6 +23,9 @@ public class ListeReservationController implements Initializable {
     private TableColumn<Vol, String> ColAA;
 
     @FXML
+    private TableColumn<Reservation,Integer> Idreservation;
+
+    @FXML
     private TableColumn<Vol, String> ColAd;
 
     @FXML
@@ -38,7 +41,7 @@ public class ListeReservationController implements Initializable {
     private TableColumn<Vol, String> ColHD;
 
     @FXML
-    private TableColumn<Reservation, Integer> IdIdReservation;
+    private TableColumn<Reservation, String> EtatReservation;
 
     @FXML
     private TableColumn<Reservation,String> IdNomClient;
@@ -85,6 +88,7 @@ public class ListeReservationController implements Initializable {
         IdPrenomClient.setCellValueFactory(cellData -> cellData.getValue().prenomClientProperty());
         IdPassport.setCellValueFactory(cellData -> cellData.getValue().numPassportProperty());
         IdNumVol.setCellValueFactory(cellData -> cellData.getValue().numVolProperty().asObject());
+        EtatReservation.setCellValueFactory(cellData -> cellData.getValue().etatProperty());
         tabReservation.setItems(getReservation());
 
     }
@@ -136,22 +140,66 @@ public class ListeReservationController implements Initializable {
     }
     private ObservableList<Reservation> getReservation() {
         ObservableList<Reservation> reservations = FXCollections.observableArrayList();
-        int idVol = TablVol.getSelectionModel().getSelectedItem().getIdVol();
+        if(TablVol.getSelectionModel().getSelectedItem() == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Erreur");
+            alert.setContentText("Veuillez selectionner un vol");
+            alert.showAndWait();
+        }
+        else {
+            int idVol = TablVol.getSelectionModel().getSelectedItem().getIdVol();
 
 
+            Connection con = Connexion.getConnexionn();
+            Statement statement = null;
+            ResultSet resultSet = null;
+            try {
+                statement = con.createStatement();
+                resultSet = statement.executeQuery("SELECT * FROM `reservation` WHERE `numVol` = " + idVol + "");
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("idReservation");
+                    String nomClient = resultSet.getString("nomClient");
+                    String prenomClient = resultSet.getString("prenomClient");
+                    String numPassport = resultSet.getString("numPassport");
+                    int numVol = resultSet.getInt("numVol");
+                    String etat = resultSet.getString("etat");
+                    Reservation reservation = new Reservation(id,nomClient, prenomClient, numPassport, numVol, etat);
+                    reservations.add(reservation);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+        }
+        return reservations;
+    }
+
+    @FXML
+    public void ListToutLesReservation(ActionEvent event) {
+        IdNomClient.setCellValueFactory(cellData -> cellData.getValue().nomClientProperty());
+        IdPrenomClient.setCellValueFactory(cellData -> cellData.getValue().prenomClientProperty());
+        IdPassport.setCellValueFactory(cellData -> cellData.getValue().numPassportProperty());
+        IdNumVol.setCellValueFactory(cellData -> cellData.getValue().numVolProperty().asObject());
+        tabReservation.setItems(getToutReservation());
+    }
+
+    private ObservableList<Reservation> getToutReservation() {
+        ObservableList<Reservation> reservations = FXCollections.observableArrayList();
         Connection con = Connexion.getConnexionn();
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             statement = con.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM `reservation` WHERE `numVol` = "+idVol+"");
+            resultSet = statement.executeQuery("SELECT * FROM `reservation`");
             while (resultSet.next()) {
                 int id = resultSet.getInt("idReservation");
                 String nomClient = resultSet.getString("nomClient");
                 String prenomClient = resultSet.getString("prenomClient");
                 String numPassport = resultSet.getString("numPassport");
                 int numVol = resultSet.getInt("numVol");
-                Reservation reservation = new Reservation( nomClient, prenomClient, numPassport, numVol);
+                String etat = resultSet.getString("etat");
+                Reservation reservation = new Reservation( id,nomClient, prenomClient, numPassport, numVol, etat);
                 reservations.add(reservation);
             }
         } catch (Exception e) {
@@ -160,4 +208,8 @@ public class ListeReservationController implements Initializable {
         }
         return reservations;
     }
+
+    @FXML
+    public void SupprimerReservation(ActionEvent event) {}
+
 }

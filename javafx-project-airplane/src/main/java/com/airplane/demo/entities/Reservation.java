@@ -10,23 +10,22 @@ public class Reservation {
     private SimpleStringProperty prenomClient;
     private SimpleStringProperty numPassport;
     private SimpleIntegerProperty numVol;
-    public Reservation(String nomClient, String prenomClient, String numPassport, int vol) {
+    private SimpleStringProperty etat;
+    public Reservation(Integer id,String nomClient, String prenomClient, String numPassport, int vol, String etat) {
+        this.idReservation = new SimpleIntegerProperty(id);
 
         this.nomClient = new SimpleStringProperty(nomClient);
         this.prenomClient = new SimpleStringProperty(prenomClient);
         this.numPassport = new SimpleStringProperty(numPassport);
         this.numVol = new SimpleIntegerProperty(vol);
+        this.etat = new SimpleStringProperty(etat);
 
     }
 
-    public int getIdReservation() {
-        return idReservation.get();
-    }
 
     public SimpleIntegerProperty idReservationProperty() {
         return idReservation;
     }
-
     public void setIdReservation(int idReservation) {
         this.idReservation.set(idReservation);
     }
@@ -77,5 +76,21 @@ public class Reservation {
 
     public void setNumVol(int numVol) {
         this.numVol.set(numVol);
+    }
+
+    public int getIdReservation() {
+        return idReservation.get();
+    }
+
+    public String getEtat() {
+        return etat.get();
+    }
+
+    public SimpleStringProperty etatProperty() {
+        return etat;
+    }
+
+    public void setEtat(String etat) {
+        this.etat.set(etat);
     }
 }

@@ -11,14 +11,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="515.0" prefWidth="791.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.airplane.demo.AdminPanelController">
+<AnchorPane prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.airplane.demo.AdminPanelController">
    <children>
       <Text layoutX="417.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Les vols">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <AnchorPane prefHeight="515.0" prefWidth="154.0" style="-fx-background-color: #154c79;">
+      <AnchorPane prefHeight="700.0" prefWidth="154.0" style="-fx-background-color: #154c79;">
          <children>
             <GridPane layoutX="24.0" layoutY="91.0" prefHeight="218.0" prefWidth="115.0">
               <columnConstraints>
@@ -40,7 +40,7 @@
             </GridPane>
          </children>
       </AnchorPane>
-      <TableView fx:id="TablVol" layoutX="165.0" layoutY="49.0" prefHeight="200.0" prefWidth="618.0">
+      <TableView fx:id="TablVol" layoutX="173.0" layoutY="206.0" prefHeight="309.0" prefWidth="618.0">
          <columns>
             <TableColumn fx:id="colId" prefWidth="30.0" text="ID" />
             <TableColumn fx:id="ColAd" prefWidth="90.0" text="Areport depart" />
@@ -52,19 +52,19 @@
             <TableColumn fx:id="etat" prefWidth="63.0" text="Etat" />
          </columns>
       </TableView>
-      <Text layoutX="500.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Liste des escales de vol selectionner" />
-      <TableView fx:id="tabEscale" layoutX="438.0" layoutY="285.0" prefHeight="130.0" prefWidth="339.0">
+      <Text layoutX="329.0" layoutY="538.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Liste des escales de vol selectionner" />
+      <TableView fx:id="tabEscale" layoutX="329.0" layoutY="554.0" prefHeight="130.0" prefWidth="339.0">
          <columns>
             <TableColumn fx:id="AEscale" prefWidth="92.0" text="Aeroport" />
             <TableColumn fx:id="HAriiver" prefWidth="122.4000244140625" text="Heure arrive" />
             <TableColumn fx:id="HEscale" prefWidth="124.0" text="Heure depart" />
          </columns>
       </TableView>
-      <Text layoutX="213.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date Arriver" />
-      <DatePicker fx:id="DateRech" layoutX="209.0" layoutY="291.0" prefHeight="26.0" prefWidth="175.0" />
-      <Button layoutX="259.0" layoutY="458.0" mnemonicParsing="false" onAction="#RechercherParDate" prefHeight="35.0" prefWidth="75.0" text="Rechercher" />
-      <Button layoutX="543.0" layoutY="453.0" mnemonicParsing="false" onAction="#ListerLesEscales" prefHeight="35.0" prefWidth="102.0" text="lister les escales" />
-      <DatePicker fx:id="DateDepartId" layoutX="209.0" layoutY="389.0" />
-      <Text layoutX="213.0" layoutY="379.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date Depart" />
+      <Text layoutX="404.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date Arriver" />
+      <DatePicker fx:id="DateRech" layoutX="395.0" layoutY="114.0" prefHeight="26.0" prefWidth="175.0" />
+      <Button layoutX="349.0" layoutY="152.0" mnemonicParsing="false" onAction="#RechercherParDate" prefHeight="35.0" prefWidth="75.0" text="Rechercher" />
+      <Button layoutX="173.0" layoutY="650.0" mnemonicParsing="false" onAction="#ListerLesEscales" prefHeight="35.0" prefWidth="102.0" text="lister les escales" />
+      <DatePicker fx:id="DateDepartId" layoutX="190.0" layoutY="115.0" />
+      <Text layoutX="202.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date Depart" />
    </children>
 </AnchorPane>

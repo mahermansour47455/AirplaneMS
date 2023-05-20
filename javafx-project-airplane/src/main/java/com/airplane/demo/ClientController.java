@@ -11,10 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
@@ -45,6 +42,9 @@ public class ClientController implements Initializable {
 
     @FXML
     private TableColumn<Vol,Integer> colId;
+
+    @FXML
+    private TableColumn<Reservation,String> EtatReservation;
 
     @FXML
     private TableColumn<Vol,String> colEtat;
@@ -90,6 +90,8 @@ public class ClientController implements Initializable {
 
     @FXML
     private TableView<Reservation> tabReservation;
+    @FXML
+    private TableColumn<Reservation,Integer> Idreservation;
 
 
 
@@ -113,25 +115,29 @@ public class ClientController implements Initializable {
     }
     @FXML
     void listerReservation(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information Dialog");
-        alert.setHeaderText(null);
-        alert.setContentText("Reservation");
-        alert.showAndWait();
-
-
+        Idreservation.setCellValueFactory(cellData -> cellData.getValue().idReservationProperty().asObject());
 
 
         IdNomClient.setCellValueFactory(cellData -> cellData.getValue().nomClientProperty());
         IdPrenomClient.setCellValueFactory(cellData -> cellData.getValue().prenomClientProperty());
         IdPassport.setCellValueFactory(cellData -> cellData.getValue().numPassportProperty());
         IdNumVol.setCellValueFactory(cellData -> cellData.getValue().numVolProperty().asObject());
+        EtatReservation.setCellValueFactory(cellData -> cellData.getValue().etatProperty());
         tabReservation.setItems(getReservation());
 
     }
     private ObservableList<Reservation>getReservation()
     {
         String numPassport = VnumPassport.getText();
+        if(numPassport.isEmpty())
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez saisir le numero de passport");
+            alert.showAndWait();
+        }
+        else{
         ObservableList<Reservation> reservations = FXCollections.observableArrayList();
         Connection con = Connexion.getConnexionn();
         Statement statement = null;
@@ -140,11 +146,13 @@ public class ClientController implements Initializable {
             statement = con.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM `Reservation` where numPassport='"+numPassport+"'");
             while (resultSet.next()) {
+                int id = resultSet.getInt("idReservation");
                 String nom = resultSet.getString("nomClient");
                 String prenom = resultSet.getString("prenomClient");
                 String passport = resultSet.getString("numPassport");
                 int numVol = resultSet.getInt("numVol");
-                Reservation reservation = new Reservation(nom,prenom,passport,numVol);
+                String etat = resultSet.getString("etat");
+                Reservation reservation = new Reservation(id,nom,prenom,passport,numVol,etat);
                 reservations.add(reservation);
 
             }
@@ -152,6 +160,8 @@ public class ClientController implements Initializable {
             throw new RuntimeException(e);
         }
         return reservations;
+    }
+        return null;
     }
 
 
@@ -248,6 +258,85 @@ public class ClientController implements Initializable {
 
         return escales;
     }
+
+    @FXML
+    public void ConfirmerReservation(ActionEvent event)
+    {
+        if(tabReservation.getSelectionModel().getSelectedItem().getEtat().equals("Confirmer"))
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Reservation deja confirmer");
+            alert.showAndWait();
+        }
+        else {
+            int idReservation = tabReservation.getSelectionModel().getSelectedItem().getIdReservation();
+            System.out.println(idReservation);
+            Connection con = Connexion.getConnexionn();
+            Statement statement = null;
+            ResultSet resultSet = null;
+            PreparedStatement preparedStatement = null;
+
+            try {
+                String query = "UPDATE reservation SET etat = ? WHERE idReservation = ?";
+                preparedStatement = con.prepareStatement(query);
+                preparedStatement.setString(1, "Confirmer");
+                preparedStatement.setInt(2, idReservation);
+                preparedStatement.executeUpdate();
+                tabReservation.setItems(getReservation());
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("Reservation annuler avec succes");
+                alert.showAndWait();
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+        }
+
+
+    }
+    public void AnnulerReservation(ActionEvent event)
+    {
+        if(tabReservation.getSelectionModel().getSelectedItem().getEtat().equals("Annuler"))
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Reservation deja Annuler");
+            alert.showAndWait();
+        }
+        else {
+            int idReservation = tabReservation.getSelectionModel().getSelectedItem().getIdReservation();
+            System.out.println(idReservation);
+            Connection con = Connexion.getConnexionn();
+            Statement statement = null;
+            ResultSet resultSet = null;
+            PreparedStatement preparedStatement = null;
+
+            try {
+                String query = "UPDATE reservation SET etat = ? WHERE idReservation = ?";
+                preparedStatement = con.prepareStatement(query);
+                preparedStatement.setString(1, "Annuler");
+                preparedStatement.setInt(2, idReservation);
+                preparedStatement.executeUpdate();
+                tabReservation.setItems(getReservation());
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("Reservation annuler avec succes");
+                alert.showAndWait();
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+        }
+    }
+
+
+
 
 
 }

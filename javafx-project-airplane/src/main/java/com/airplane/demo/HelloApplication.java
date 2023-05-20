@@ -11,8 +11,8 @@ import java.sql.Connection;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("client.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 695, 430);
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("adminPanel.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();

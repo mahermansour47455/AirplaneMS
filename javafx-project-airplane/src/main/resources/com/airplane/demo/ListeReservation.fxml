@@ -7,10 +7,12 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="572.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.airplane.demo.ListeReservationController">
+<AnchorPane prefHeight="600.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.airplane.demo.ListeReservationController">
    <children>
-      <AnchorPane layoutX="-1.0" prefHeight="572.0" prefWidth="166.0" style="-fx-background-color: #154c79;">
+      <AnchorPane layoutX="-1.0" prefHeight="711.0" prefWidth="166.0" style="-fx-background-color: #154c79;">
          <children>
             <GridPane layoutX="24.0" layoutY="91.0" prefHeight="218.0" prefWidth="115.0">
                <columnConstraints>
@@ -32,15 +34,16 @@
             </GridPane>
          </children>
       </AnchorPane>
-      <TableView fx:id="tabReservation" layoutX="191.0" layoutY="334.0" prefHeight="200.0" prefWidth="618.0">
+      <TableView fx:id="tabReservation" layoutX="181.0" layoutY="476.0" prefHeight="200.0" prefWidth="710.0">
         <columns>
           <TableColumn fx:id="IdNomClient" prefWidth="144.79998779296875" text="NomClient" />
             <TableColumn fx:id="IdPrenomClient" prefWidth="184.00006103515625" text="PrenomClient" />
             <TableColumn fx:id="IdPassport" prefWidth="147.99993896484375" text="NumPassport" />
             <TableColumn fx:id="IdNumVol" prefWidth="138.39996337890625" text="NumVol" />
+            <TableColumn fx:id="EtatReservation" prefWidth="93.59995117187498" text="Etat" />
         </columns>
       </TableView>
-      <TableView fx:id="TablVol" layoutX="191.0" layoutY="59.0" prefHeight="200.0" prefWidth="618.0">
+      <TableView fx:id="TablVol" layoutX="226.0" layoutY="65.0" prefHeight="278.0" prefWidth="622.0">
          <columns>
             <TableColumn fx:id="colId" prefWidth="30.0" text="ID" />
             <TableColumn fx:id="ColAd" prefWidth="90.0" text="Areport depart" />
@@ -52,6 +55,14 @@
             <TableColumn fx:id="etat" prefWidth="63.0" text="Etat" />
          </columns>
       </TableView>
-      <Button layoutX="448.0" layoutY="286.0" mnemonicParsing="false" onAction="#listerReservation" text="les Reservation" />
+      <Button layoutX="327.0" layoutY="422.0" mnemonicParsing="false" onAction="#listerReservation" text="les Reservation" />
+      <Button layoutX="641.0" layoutY="422.0" mnemonicParsing="false" onAction="#ListToutLesReservation" text="Tous les passager" />
+      <Text layoutX="277.0" layoutY="404.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choisir un vol et Consulter ses Passagers" />
+      <Text layoutX="592.0" layoutY="404.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cliquer pour affichier tous les passager!" />
+      <Text layoutX="401.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Espace Admin" wrappingWidth="271.19997558593764">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
