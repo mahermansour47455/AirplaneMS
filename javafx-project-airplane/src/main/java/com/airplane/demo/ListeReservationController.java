@@ -6,11 +6,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -33,6 +39,9 @@ public class ListeReservationController implements Initializable {
 
     @FXML
     private TableColumn<Vol, String> ColDD;
+
+    @FXML
+    private Button routerSurlesvols;
 
     @FXML
     private TableColumn<Vol, String> ColHA;
@@ -72,7 +81,15 @@ public class ListeReservationController implements Initializable {
     }
 
     @FXML
-    void listerLesVols(ActionEvent event) {
+    void listerLesVols(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("escale.fxml"));
+        Parent home = fxmlLoader.load();
+        Scene homeScene = new Scene(home, 1000, 800);
+
+        Stage currentStage = (Stage) routerSurlesvols.getScene().getWindow();
+        currentStage.setTitle("Home");
+        currentStage.setScene(homeScene);
+        currentStage.show();
 
     }
 
@@ -210,6 +227,31 @@ public class ListeReservationController implements Initializable {
     }
 
     @FXML
-    public void SupprimerReservation(ActionEvent event) {}
+    public void supprimerPassager(ActionEvent event) {
+        if(tabReservation.getSelectionModel().getSelectedItem() == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Erreur");
+            alert.setContentText("Veuillez selectionner un passager");
+            alert.showAndWait();
+        }
+        else {
+            int id = tabReservation.getSelectionModel().getSelectedItem().getIdReservation();
+            Connection con = Connexion.getConnexionn();
+            Statement statement = null;
+            try {
+                statement = con.createStatement();
+                statement.executeUpdate("DELETE FROM `reservation` WHERE `idReservation` = " + id + "");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText("Information");
+                alert.setContentText("Passager supprimer avec succes");
+                alert.showAndWait();
+                tabReservation.setItems(getReservation());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }

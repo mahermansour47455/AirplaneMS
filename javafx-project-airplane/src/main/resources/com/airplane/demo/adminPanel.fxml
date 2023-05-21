@@ -32,10 +32,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" onAction="#listerLesVols" prefHeight="26.0" prefWidth="84.0" text="Les vols" GridPane.halignment="CENTER" />
-                  <Button mnemonicParsing="false" onAction="#listerPassager" prefHeight="26.0" prefWidth="94.0" text="Les passagers" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <Button fx:id="BtnReservation" mnemonicParsing="false" onAction="#listerReservation" text="les reservations" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <Button mnemonicParsing="false" onAction="#lesAeroports" prefHeight="26.0" prefWidth="90.0" text="les aeroports" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                </children>
             </GridPane>
             <Button fx:id="btnLogout" layoutX="51.0" layoutY="651.0" mnemonicParsing="false" onAction="#Logout" text="Logout" />
